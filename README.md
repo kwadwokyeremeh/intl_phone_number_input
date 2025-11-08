@@ -12,6 +12,7 @@ A simple and customizable flutter package for inputting phone number in intl / i
 
 
 ### What's new
+  - **Platform-Adaptive UI**: Switched to using `PlatformTextFormField` and `PlatformListTile` to provide a native look and feel on iOS (Cupertino) and Android (Material).
   - Replace libphonenumber_plugin with dlibphonenumber
   - Updated libphonenumber and PhoneNumberToCarrierMapper on Android
   - Removed dependency on libphonenumber
@@ -22,6 +23,7 @@ A simple and customizable flutter package for inputting phone number in intl / i
   
 ### Features
   - Support all Flutter platforms.
+  - **Native Look and Feel** with platform-adaptive widgets.
   - Support for RTL languages
   - Selector mode dropdown, bottom sheet and dialog
   - As You Type Formatter: formats inputs to its selected international format
@@ -44,6 +46,7 @@ A simple and customizable flutter package for inputting phone number in intl / i
 > Could throw an Exception if the phoneNumber isn't recognised its a good pattern to pass the country's isoCode or have '+' at the beginning of the string
 
 > isoCode could be null if PhoneNumber is not recognised
+> This package now depends on `flutter_platform_widgets` to provide platform-adaptive widgets.
 
 # Usage
 

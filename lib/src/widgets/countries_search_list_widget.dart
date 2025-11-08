@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
@@ -62,18 +63,26 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
+          child: PlatformTextFormField(
             key: Key(TestHelper.CountrySearchInputKeyValue),
-            decoration: getSearchBoxDecoration(),
+            material: (_, __) =>
+                MaterialTextFormFieldData(
+                  decoration: getSearchBoxDecoration(),
+                ),
+            cupertino: (_, __) =>
+                CupertinoTextFormFieldData(
+                  placeholder: 'Search by country name or dial code',
+                ),
             controller: _searchController,
             autofocus: widget.autoFocus,
             onChanged: (value) {
-              final String value = _searchController.text.trim();
+              final String trimmedValue = _searchController.text.trim();
               return setState(
-                () => filteredCountries = Utils.filterCountries(
+                    () =>
+                filteredCountries = Utils.filterCountries(
                   countries: widget.countries,
                   locale: widget.locale,
-                  value: value,
+                  value: trimmedValue,
                 ),
               );
             },
@@ -147,7 +156,7 @@ class DirectionalCountryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return PlatformListTile(
       key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
       leading: (showFlags ? _Flag(country: country, useEmoji: useEmoji) : null),
       title: Align(
@@ -181,20 +190,24 @@ class _Flag extends StatelessWidget {
   Widget build(BuildContext context) {
     return country != null
         ? Container(
-            child: useEmoji!
-                ? Text(
-                    Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  )
-                : country?.flagUri != null
-                    ? CircleAvatar(
-                        backgroundImage: AssetImage(
-                          country!.flagUri,
-                          package: 'intl_phone_number_input',
-                        ),
-                      )
-                    : SizedBox.shrink(),
-          )
+      child: useEmoji!
+          ? Text(
+        Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
+        style: platformThemeData(
+          context,
+          material: (data) => data.textTheme.headlineSmall,
+          cupertino: (data) => data.textTheme.navTitleTextStyle,
+        ),
+      )
+          : country?.flagUri != null
+          ? CircleAvatar(
+        backgroundImage: AssetImage(
+          country!.flagUri,
+          package: 'intl_phone_number_input',
+        ),
+      )
+          : SizedBox.shrink(),
+    )
         : SizedBox.shrink();
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl_phone_number_input/src/models/country_list.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/providers/country_provider.dart';
@@ -674,9 +675,8 @@ class _InputWidgetView
             SizedBox(width: widget.spaceBetweenSelectorAndTextField),
           ],
           Flexible(
-            child: TextFormField(
+            child: PlatformTextFormField(
               key: widget.fieldKey ?? Key(TestHelper.TextInputKeyValue),
-              textDirection: TextDirection.ltr,
               controller: state.controller,
               cursorColor: widget.cursorColor,
               focusNode: widget.focusNode,
@@ -685,7 +685,7 @@ class _InputWidgetView
               keyboardType: widget.keyboardType,
               textInputAction: widget.keyboardAction,
               style: widget.textStyle,
-              decoration: state.getInputDecoration(widget.inputDecoration),
+              // decoration: state.getInputDecoration(widget.inputDecoration),
               textAlign: widget.textAlign,
               textAlignVertical: widget.textAlignVertical,
               onEditingComplete: widget.onSubmit,
@@ -708,6 +708,29 @@ class _InputWidgetView
                     : FilteringTextInputFormatter.digitsOnly,
               ],
               onChanged: state.onChanged,
+              material: (_, __) => MaterialTextFormFieldData(
+                decoration: state.getInputDecoration(widget.inputDecoration),
+                textDirection: TextDirection.ltr,
+              ),
+              cupertino: (_, __) => CupertinoTextFormFieldData(
+                placeholder: widget.hintText,
+                textDirection: TextDirection.ltr,
+                prefix: widget.selectorConfig.setSelectorButtonAsPrefixIcon
+                    ? SelectorButton(
+                  country: state.country,
+                  countries: state.countries,
+                  onCountryChanged: state.onCountryChanged,
+                  selectorConfig: widget.selectorConfig,
+                  selectorTextStyle: widget.selectorTextStyle,
+                  searchBoxDecoration: widget.searchBoxDecoration,
+                  locale: state.locale,
+                  isEnabled: widget.isEnabled,
+                  autoFocusSearchField: widget.autoFocusSearch,
+                  isScrollControlled:
+                  widget.countrySelectorScrollControlled,
+                )
+                    : null,
+              ),
             ),
           )
         ],
