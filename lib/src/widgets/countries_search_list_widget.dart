@@ -191,7 +191,7 @@ class _Flag extends StatelessWidget {
     return country != null
         ? Container(
       child: useEmoji!
-          ? Text(
+          ? PlatformText(
         Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
         style: platformThemeData(
           context,

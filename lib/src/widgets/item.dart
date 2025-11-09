@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
+
 
 /// [Item]
 class Item extends StatelessWidget {
@@ -41,9 +44,8 @@ class Item extends StatelessWidget {
             useEmoji: useEmoji,
           ),
           SizedBox(width: 12.0),
-          Text(
+          PlatformText(
             '$dialCode',
-            textDirection: TextDirection.ltr,
             style: textStyle,
           ),
         ],
@@ -65,7 +67,7 @@ class _Flag extends StatelessWidget {
     return country != null && showFlag!
         ? Container(
             child: useEmoji!
-                ? Text(
+                ? PlatformText(
                     Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
                     style: Theme.of(context).textTheme.headlineSmall,
                   )

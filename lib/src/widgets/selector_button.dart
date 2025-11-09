@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/selector_config.dart';
 import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
@@ -62,10 +64,9 @@ class SelectorButton extends StatelessWidget {
                 trailingSpace: selectorConfig.trailingSpace,
                 textStyle: selectorTextStyle,
               )
-        : MaterialButton(
+        : PlatformElevatedButton(
             key: Key(TestHelper.DropdownButtonKeyValue),
             padding: EdgeInsets.zero,
-            minWidth: 0,
             onPressed: countries.isNotEmpty && countries.length > 1 && isEnabled
                 ? () async {
                     Country? selected;
